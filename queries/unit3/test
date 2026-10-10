@@ -1,0 +1,13 @@
+SELECT booking_id,
+       passenger_id,
+       flight_id,
+       booked_at,
+       checked_in_at,
+       booking_country,
+       fare_paid,
+       bags_kg,
+       fare_multiplier,
+       booking_status,
+       cancellation_reason
+FROM public.bookings
+LIMIT 1000;
