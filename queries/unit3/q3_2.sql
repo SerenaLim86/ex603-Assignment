@@ -30,22 +30,22 @@ VALUES (
 SELECT flight_number FROM flights
 
 --2. query with a negation or inequality predicate on that column
---Returns all bookings not equal to 'Passenger cancelled' under cancellation_reason, ommitted NULL silently.
+--Returns all bookings not equal to 'Passenger no show' under cancellation_reason, ommitted NULL silently.
 SELECT
     booking_id,
     booking_status,
     cancellation_reason
 FROM bookings
-WHERE cancellation_reason <> 'Passenger cancelled' 
+WHERE cancellation_reason <> 'Passenger no show' 
 ORDER BY booking_id ASC;
 
 
---Total row count for all bookings not equal to 'Passenger cancelled' is 26
+--Total row count for all bookings not equal to 'Passenger no show' is 22
 SELECT COUNT(*) AS total_rows
 FROM bookings
-WHERE cancellation_reason <> 'Passenger cancelled';
+WHERE cancellation_reason <> 'Passenger no show';
 
---3. Total row count of NULL ommited when select cancellation_reason <> 'Passenger cancelled' is 166:
+--3. Total row count of NULL ommited when select cancellation_reason <> 'Passenger no show' is 166:
 SELECT COUNT(*) AS rows_omitted_due_to_null
 FROM bookings
 WHERE cancellation_reason IS NULL;
@@ -56,17 +56,17 @@ WHERE cancellation_reason IS NULL;
 SELECT
     COUNT(*) AS total_bookings,
     COUNT(*) FILTER (
-        WHERE cancellation_reason <> 'Passenger cancelled'
-    ) AS not_passenger_cancel_reason,
+        WHERE cancellation_reason <> 'Passenger no show'
+    ) AS not_passenger_no_show_reason,
     COUNT(*) FILTER (
         WHERE cancellation_reason IS NULL
     ) AS omitted_null_reason,
     COUNT(*) FILTER (
-        WHERE cancellation_reason = 'Passenger cancelled'
-    ) AS passenger_cancelled_reason
+        WHERE cancellation_reason = 'Passenger no show'
+    ) AS passenger_no_show_reason
 FROM bookings;
 --The total of omitted_null_reason is 166, total_bookings - null omitted_null_reason: 200-166 = 34.
---not_passenger_cancel_reason + passenger_cancelled_reason = 34
+--not_passenger_no_show_reason + passenger_no_show_reason = 22+12 + 34
 --Only 34 total rows have a cancellation_reason. 
 
 -- 4.Repair using IS NULL for null reasons.
@@ -75,7 +75,7 @@ SELECT
     booking_status,
     cancellation_reason
 FROM bookings
-WHERE cancellation_reason <> 'Passenger cancelled' 
+WHERE cancellation_reason <> 'Passenger no show' 
     OR cancellation_reason IS NULL
 ORDER BY booking_id ASC;
 
@@ -85,14 +85,14 @@ SELECT
     booking_status,
     COALESCE(cancellation_reason, 'Missing reason') AS cancellation_reason
 FROM bookings
-WHERE cancellation_reason <> 'Passenger cancelled'
+WHERE cancellation_reason <> 'Passenger no show'
    OR cancellation_reason IS NULL
 ORDER BY booking_id ASC;
 
---test by recount total_passenger_canceled = 192
+--test by recount total_passenger_canceled = 188
 SELECT COUNT(*) AS total_passenger_canceled
 FROM bookings
-WHERE cancellation_reason <> 'Passenger cancelled'
+WHERE cancellation_reason <> 'Passenger no show'
    OR cancellation_reason IS NULL;
 
 --Part B: The alias that did not exist yet

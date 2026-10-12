@@ -1,12 +1,11 @@
 /*
-Task 3.3: Hand the team a corrected query- the three equivalent forms
+Task 3.3: Hand the team a corrected query with three equivalent forms
 
 Question: Which passengers were involved in disputed bookings?
-Step 1- Find passenger IDs on bookings whose status is 'disputed'.
-Step 2- Return those passengers' details.
+Find passenger IDs on bookings whose booking status is 'disputed' and return those passengers' details.
 */
 
--- Form 1: IN with a subquery
+-- Form 1: subquery with IN
 SELECT
     p.passenger_id,
     p.passenger_name,
@@ -50,8 +49,8 @@ WHERE EXISTS (
 )
 ORDER BY p.passenger_id;
 
--- Verify that the result rows match, not just the row counts.
--- Returns no rows when all three results are identical.
+-- Verify the 3 forms results match using EXCEPT 
+-- Returns no rows when all three results are identical
 WITH
 in_form AS (
     SELECT p.passenger_id, p.passenger_name, p.home_country
@@ -102,11 +101,9 @@ ORDER BY passenger_id;
 One input condition under which the three would not be equivalent:
 (NULLs, duplicates, and empty result sets are the usual places equivalence breaks)
 
-These three forms return the same passenger rows here:
-passenger_id is NOT NULL and is a primary key in passengers. Duplicate
-passenger_id values in bookings do not change membership results.
-
-A related NULL pitfall occurs if using NOT IN for a negative-membership
-version. If the subquery returns a NULL, NOT IN will become UNKNOWN and 
-can return no rows. NOT EXISTS does not have that issue.
+These three forms return the same passenger rows & counts currently. All the attributes we use for filter here do 
+not have inequivalence result, but if the data are updated to NULLs, duplicates, and empty result, this can change.
+For example, if passenger name are repeated or if the insert criteria is updated.
+Another probability is if we used attributed like bookings.cancellation_reason as selection criteria. 
+However, this will not make sense to be use in this question.
 */

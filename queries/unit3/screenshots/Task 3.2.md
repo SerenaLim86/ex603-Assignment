@@ -3,19 +3,19 @@ The total of omitted_null_reason is 166
 
 total_bookings - null omitted_null_reason: 200-166 = 34.
 
-![Alt Text](q3_2_PartA_3.png)
+![Alt Text](q3_2_PartA_3_.png)
 
 ## Repaired query returning the full count.
 
 Fix: UsingIS NULL
-![Alt Text](q3_2_PartA_4_IS_NULL.png)
+![Alt Text](q3_2_PartA_4_IS_NULL_.png)
 
 
 Fix: Using COALESCE
-![Alt Text](q3_2_PartA_4_COALESCE.png)
+![Alt Text](q3_2_PartA_4_COALESCE_.png)
 
 Post Fix Re-count testing: total_passenger_canceled = 192
-![Alt Text](q3_2_PartA_4_TEST.png)
+![Alt Text](q3_2_PartA_4_TEST_.png)
 
 ## Task 3.2 Part B: the failing query and its verbatim error message in one capture, followed by both rewrites running.
 
