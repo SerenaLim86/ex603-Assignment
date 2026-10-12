@@ -6,7 +6,7 @@ Step 1- Find passenger IDs on bookings whose status is 'disputed'.
 Step 2- Return those passengers' details.
 */
 
--- Form 1: IN with a subquery.
+-- Form 1: IN with a subquery
 SELECT
     p.passenger_id,
     p.passenger_name,
@@ -19,7 +19,7 @@ WHERE p.passenger_id IN (
 )
 ORDER BY p.passenger_id;
 
--- Form 2: CTE followed by IN.
+-- Form 2: Common Table Expression using WITH
 WITH disputed_passengers AS (
     SELECT b.passenger_id
     FROM bookings AS b
@@ -36,7 +36,7 @@ WHERE p.passenger_id IN (
 )
 ORDER BY p.passenger_id;
 
--- Form 3: correlated EXISTS.
+-- Form 3: using EXISTS
 SELECT
     p.passenger_id,
     p.passenger_name,
@@ -51,7 +51,7 @@ WHERE EXISTS (
 ORDER BY p.passenger_id;
 
 -- Verify that the result rows match, not just the row counts.
--- This returns no rows when all three results are identical.
+-- Returns no rows when all three results are identical.
 WITH
 in_form AS (
     SELECT p.passenger_id, p.passenger_name, p.home_country
@@ -99,12 +99,14 @@ FROM differences
 ORDER BY passenger_id;
 
 /*
-Equivalence condition:
-These three positive-membership forms return the same passenger rows here:
+One input condition under which the three would not be equivalent:
+(NULLs, duplicates, and empty result sets are the usual places equivalence breaks)
+
+These three forms return the same passenger rows here:
 passenger_id is NOT NULL and is a primary key in passengers. Duplicate
 passenger_id values in bookings do not change membership results.
 
 A related NULL pitfall occurs if using NOT IN for a negative-membership
-version: if its subquery returns even one NULL, NOT IN evaluates to UNKNOWN
-for comparisons and can return no rows. NOT EXISTS does not have that issue.
+version. If the subquery returns a NULL, NOT IN will become UNKNOWN and 
+can return no rows. NOT EXISTS does not have that issue.
 */
