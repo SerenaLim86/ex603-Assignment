@@ -31,7 +31,7 @@ CREATE TABLE passengers (
 -- ---------- producer ----------
 CREATE TABLE flights (
     flight_id        INT           NOT NULL,
-    flight_number      VARCHAR(120)  NOT NULL,
+    flight_number      VARCHAR(120),
     first_scheduled_on      DATE          NOT NULL,
     origin_country    VARCHAR(80)   NOT NULL,
     tail_number    VARCHAR(60)   NOT NULL,
