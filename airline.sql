@@ -74,7 +74,7 @@ CREATE TABLE flight_routes (
 
 -- ---------- event: the high volume fact table ----------
 CREATE TABLE bookings (
-    booking_id       BIGINT        NOT NULL,
+    booking_id       INT        NOT NULL,
     passenger_id       INT           NOT NULL,
     flight_id       INT           NOT NULL,
     booked_at       TIMESTAMP      NOT NULL,
