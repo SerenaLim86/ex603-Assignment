@@ -122,8 +122,8 @@ ORDER BY region;
 
 >Part C: A two-step pipeline
 >>Leadership wants to establish a baseline for evaluating high-volume producers. That needs two steps: use a WITH clause to create an intermediate result that summarizes performance for each producer, then use a second aggregation or filter on that intermediate result to calculate a baseline for high-volume producers.
-- ✓  A WITH clause producing an intermediate aggregate.
-- ✓  A second aggregation or filter applied to that intermediate result.
+    - ✓  A WITH clause producing an intermediate aggregate.
+    - ✓  A second aggregation or filter applied to that intermediate result.
 
 - Avg fare and zero_fare paid for high-volume flights with booking_count >= 16
 - Additional analysis SQL not included, plase reference in q4_2.sql
